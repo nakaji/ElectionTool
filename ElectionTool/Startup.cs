@@ -1,4 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using System.Data.Entity;
+using ElectionTool.Migrations;
+using ElectionTool.Models;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(ElectionTool.Startup))]
@@ -8,6 +11,8 @@ namespace ElectionTool
     {
         public void Configuration(IAppBuilder app)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, Configuration>());
+
             ConfigureAuth(app);
         }
     }
