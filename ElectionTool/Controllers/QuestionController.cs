@@ -6,25 +6,36 @@ using System.Web;
 using System.Web.Mvc;
 using CoreTweet;
 using ElectionTool.Models;
+using System.Threading.Tasks;
 
 namespace ElectionTool.Controllers
 {
     public class QuestionController : Controller
     {
-        public ActionResult Entry(string question)
+        public async Task<ActionResult> Entry(string question)
         {
             var token = Session["AccessToken"] as Tokens;
             if (token != null)
             {
-                // todo:Twitterへの投稿
-                token.Statuses.Update(status => question);
-                // todo:データベースへの登録
+                // Twitterへの投稿
+                var response = token.Statuses.Update(status => question);
+                
+                // データベースへの登録
+                using (var db = new AppDbContext())
+                {
+                    db.Questions.Add(new Question()
+                    {
+                        Text = question,
+                        TweetId = response.Id
+                    });
 
+                    await db.SaveChangesAsync();
+                }
 
                 return View();
             }
 
-            // todo:Twitterへの認証チェック
+            // Twitterへの認証
             var consumerKey = ConfigurationManager.AppSettings["TwitterApiKey"];
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecret"];
 
@@ -32,7 +43,7 @@ namespace ElectionTool.Controllers
 
             Session["OAuthSession"] = oAuthSession;
             Session["Question"] = question;
-            
+
             return Redirect(oAuthSession.AuthorizeUri.OriginalString);
         }
     }
