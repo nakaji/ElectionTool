@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Configuration;
+using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.Twitter;
 using Owin;
 using ElectionTool.Models;
 
@@ -53,6 +56,18 @@ namespace ElectionTool
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            var options = new TwitterAuthenticationOptions();
+            options.ConsumerKey = ConfigurationManager.AppSettings["TwitterApiKeyForCandidate"];
+            options.ConsumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecretForCandidate"];
+            options.Provider = new TwitterAuthenticationProvider()
+            {
+                OnAuthenticated = async (context) =>
+                {
+                    context.Identity.AddClaim(new Claim("ExternalAccessToken", context.AccessToken));
+                    context.Identity.AddClaim(new Claim("ExternalAccessTokenSecret", context.AccessTokenSecret));
+                }
+            };
+            app.UseTwitterAuthentication(options);
 
             //app.UseFacebookAuthentication(
             //   appId: "",

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CoreTweet;
+using ElectionTool.Helper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -21,7 +24,7 @@ namespace ElectionTool.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -123,7 +126,7 @@ namespace ElectionTool.Controllers
             // ユーザーが誤ったコードを入力した回数が指定の回数に達すると、ユーザー アカウントは
             // 指定の時間が経過するまでロックアウトされます。
             // アカウント ロックアウトの設定は IdentityConfig の中で構成できます。
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -158,8 +161,8 @@ namespace ElectionTool.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // アカウント確認とパスワード リセットを有効にする方法の詳細については、http://go.microsoft.com/fwlink/?LinkID=320771 を参照してください
                     // このリンクを含む電子メールを送信します
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -336,6 +339,10 @@ namespace ElectionTool.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    // ログインしたらAccessToken,AccessTokenSecretを保存しておく
+                    Session["AccessToken"] = loginInfo.ExternalIdentity.Claims.First(x => x.Type == "ExternalAccessToken").Value;
+                    Session["AccessTokenSecret"] = loginInfo.ExternalIdentity.Claims.First(x => x.Type == "ExternalAccessTokenSecret").Value;
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -377,6 +384,11 @@ namespace ElectionTool.Controllers
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
+                        // ログインしたらAccessToken,AccessTokenSecretを保存しておく
+                        var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+                        Session["AccessToken"] = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessToken").Value;
+                        Session["AccessTokenSecret"] = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessTokenSecret").Value;
+                        
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
