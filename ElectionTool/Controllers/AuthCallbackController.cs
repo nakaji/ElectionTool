@@ -18,7 +18,8 @@ namespace ElectionTool.Controllers
         {
             var oAuthSession = Session["OAuthSession"] as OAuth.OAuthSession;
             var token = oAuthSession.GetTokens(oauth_verifier);
-            Session["AccessToken"] = token;
+            Session["AccessToken"] = token.AccessToken;
+            Session["AccessTokenSecret"] = token.AccessTokenSecret;
 
             var question = Session["Question"] as string;
 

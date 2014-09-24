@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CoreTweet;
+using ElectionTool.Helper;
 using ElectionTool.Models;
 using System.Threading.Tasks;
 
@@ -14,11 +15,13 @@ namespace ElectionTool.Controllers
     {
         public async Task<ActionResult> Entry(string question)
         {
-            var token = Session["AccessToken"] as Tokens;
-            if (token != null)
+            if (Session["AccessToken"] != null)
             {
+                var accessToken = Session["AccessToken"].ToString();
+                var accessTokenSecret = Session["AccessTokenSecret"].ToString();
                 // Twitterへの投稿
-                var response = token.Statuses.Update(status => question);
+                var helper = new TwitterHelperForResident(accessToken, accessTokenSecret);
+                var response = await helper.StatusUpdateAsync(question);
                 
                 // データベースへの登録
                 using (var db = new AppDbContext())
