@@ -1,0 +1,22 @@
+﻿@model ElectionTool.Models.AnswerIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>質問一覧</h2>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>質問内容</th>
+    </tr>
+    @foreach (var q in Model.Questions)
+    {
+        <tr>
+            <td>@q.Id</td>
+            <td>@q.Text</td>
+            <td>@Html.ActionLink("回答する", "Entry", new { id = q.Id })</td>
+        </tr>
+    }
+</table>
