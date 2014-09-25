@@ -31,9 +31,14 @@ namespace ElectionTool.Helper
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecretForCandidate"];
             Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
         }
+
+        public async Task<StatusResponse> StatusUpdateAsync(string message, long replyStatusId)
+        {
+            return await Token.Statuses.UpdateAsync(status => message, in_reply_to_status_id => replyStatusId);
+        }
     }
 
-    public class TwitterHelperForResident  : TwitterHelper
+    public class TwitterHelperForResident : TwitterHelper
     {
         public TwitterHelperForResident(string accessToken, string accessTokenSecret)
         {

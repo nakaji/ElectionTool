@@ -46,7 +46,7 @@ namespace ElectionTool.Controllers
             var accessTokenSecret = Session["AccessTokenSecret"].ToString();
             // Twitterへの投稿
             var helper = new TwitterHelperForCandidate(accessToken, accessTokenSecret);
-            var response = await helper.StatusUpdateAsync(model.Answer);
+            var response = await helper.StatusUpdateAsync(model.Answer, model.Question.TweetId);
 
             var answer = new Answer()
             {
