@@ -8,6 +8,7 @@ using ElectionTool.Helper;
 using ElectionTool.Models;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Core;
+using WebGrease.Css.Extensions;
 
 namespace ElectionTool.Controllers
 {
@@ -19,7 +20,13 @@ namespace ElectionTool.Controllers
         public ActionResult Index()
         {
             var model = new AnswerIndexViewModel();
-            model.Questions = _db.Questions.Include("Answers");
+
+            var userId = (User.Identity.GetUserId() ?? "");
+            _db.Questions.Include("Answers").ForEach(q =>
+            {
+                var latestAnswer = q.Answers.OrderByDescending(x => x.Id).FirstOrDefault(x => x.UserId == userId);
+                model.Questions.Add(new Tuple<Question, Answer>(q, latestAnswer));
+            });
 
             return View(model);
         }
@@ -40,7 +47,7 @@ namespace ElectionTool.Controllers
             // Twitterへの投稿
             var helper = new TwitterHelperForCandidate(accessToken, accessTokenSecret);
             var response = await helper.StatusUpdateAsync(model.Answer);
-            
+
             var answer = new Answer()
             {
                 UserId = User.Identity.GetUserId(),
