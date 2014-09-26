@@ -12,11 +12,15 @@ namespace ElectionTool.Helper
 {
     public abstract class TwitterHelper
     {
+        protected readonly string Hashtag = ConfigurationManager.AppSettings["Hashtag"];
+
         public Tokens Token { get; protected set; }
 
         public async Task<StatusResponse> StatusUpdateAsync(string message)
         {
-            return await Token.Statuses.UpdateAsync(status => message);
+            var postMassage = string.Format("{0} #{1}", message, Hashtag);
+
+            return await Token.Statuses.UpdateAsync(status => postMassage);
         }
     }
 
@@ -34,7 +38,9 @@ namespace ElectionTool.Helper
 
         public async Task<StatusResponse> StatusUpdateAsync(string message, long replyStatusId)
         {
-            return await Token.Statuses.UpdateAsync(status => message, in_reply_to_status_id => replyStatusId);
+            var postMassage = string.Format("{0} #{1}", message, Hashtag);
+
+            return await Token.Statuses.UpdateAsync(status => postMassage, in_reply_to_status_id => replyStatusId);
         }
     }
 
