@@ -27,7 +27,8 @@ namespace ElectionTool.Controllers
                     db.Questions.Add(new Question()
                     {
                         Text = question,
-                        TweetId = response.Id
+                        TweetId = response.Id,
+                        ScreenName = response.User.ScreenName
                     });
 
                     await db.SaveChangesAsync();

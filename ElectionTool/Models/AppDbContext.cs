@@ -24,6 +24,8 @@ namespace ElectionTool.Models
 
         public long TweetId { get; set; }
 
+        public string ScreenName { get; set; }
+
         public ICollection<Answer> Answers { get; set; } 
     }
 

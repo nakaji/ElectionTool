@@ -36,9 +36,9 @@ namespace ElectionTool.Helper
             Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
         }
 
-        public async Task<StatusResponse> StatusUpdateAsync(string message, long replyStatusId)
+        public async Task<StatusResponse> StatusUpdateAsync(string message, long replyStatusId,string screenName)
         {
-            var postMassage = string.Format("{0} #{1}", message, Hashtag);
+            var postMassage = string.Format(". @{0} {1} #{2}", screenName, message, Hashtag);
 
             return await Token.Statuses.UpdateAsync(status => postMassage, in_reply_to_status_id => replyStatusId);
         }

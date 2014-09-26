@@ -43,16 +43,18 @@ namespace ElectionTool.Controllers
         [HttpPost]
         public async Task<ActionResult> Entry(AnswerEntryViewModel model)
         {
+            var question = _db.Questions.Find(model.Question.Id);
+
             // Twitterへの投稿
             var helper = new TwitterHelperForCandidate(this);
-            var response = await helper.StatusUpdateAsync(model.Answer, model.Question.TweetId);
+            var response = await helper.StatusUpdateAsync(model.Answer, question.TweetId, question.ScreenName);
 
             var answer = new Answer()
             {
                 UserId = User.Identity.GetUserId(),
                 Text = model.Answer,
                 TweetId = response.Id,
-                Question = _db.Questions.Find(model.Question.Id)
+                Question = question
             };
 
             _db.Answers.Add(answer);
