@@ -17,10 +17,8 @@ namespace ElectionTool.Controllers
         {
             if (Session["AccessToken"] != null)
             {
-                var accessToken = Session["AccessToken"].ToString();
-                var accessTokenSecret = Session["AccessTokenSecret"].ToString();
                 // Twitterへの投稿
-                var helper = new TwitterHelperForResident(accessToken, accessTokenSecret);
+                var helper = new TwitterHelperForResident(this);
                 var response = await helper.StatusUpdateAsync(question);
                 
                 // データベースへの登録

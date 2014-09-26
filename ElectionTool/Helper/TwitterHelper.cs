@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using CoreTweet;
 
 namespace ElectionTool.Helper
@@ -12,10 +13,6 @@ namespace ElectionTool.Helper
     public abstract class TwitterHelper
     {
         public Tokens Token { get; protected set; }
-
-        public TwitterHelper()
-        {
-        }
 
         public async Task<StatusResponse> StatusUpdateAsync(string message)
         {
@@ -25,10 +22,13 @@ namespace ElectionTool.Helper
 
     public class TwitterHelperForCandidate : TwitterHelper
     {
-        public TwitterHelperForCandidate(string accessToken, string accessTokenSecret)
+        public TwitterHelperForCandidate(Controller controller)
         {
             var consumerKey = ConfigurationManager.AppSettings["TwitterApiKeyForCandidate"];
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecretForCandidate"];
+            var accessToken = controller.Session["AccessToken"].ToString();
+            var accessTokenSecret = controller.Session["AccessTokenSecret"].ToString();
+
             Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
         }
 
@@ -40,10 +40,13 @@ namespace ElectionTool.Helper
 
     public class TwitterHelperForResident : TwitterHelper
     {
-        public TwitterHelperForResident(string accessToken, string accessTokenSecret)
+        public TwitterHelperForResident(Controller controller)
         {
             var consumerKey = ConfigurationManager.AppSettings["TwitterApiKey"];
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecret"];
+            var accessToken = controller.Session["AccessToken"].ToString();
+            var accessTokenSecret = controller.Session["AccessTokenSecret"].ToString();
+
             Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
         }
     }

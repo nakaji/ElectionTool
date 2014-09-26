@@ -12,6 +12,7 @@ using WebGrease.Css.Extensions;
 
 namespace ElectionTool.Controllers
 {
+    [Authorize]
     public class AnswerController : Controller
     {
         private AppDbContext _db = new AppDbContext();
@@ -42,10 +43,8 @@ namespace ElectionTool.Controllers
         [HttpPost]
         public async Task<ActionResult> Entry(AnswerEntryViewModel model)
         {
-            var accessToken = Session["AccessToken"].ToString();
-            var accessTokenSecret = Session["AccessTokenSecret"].ToString();
             // Twitterへの投稿
-            var helper = new TwitterHelperForCandidate(accessToken, accessTokenSecret);
+            var helper = new TwitterHelperForCandidate(this);
             var response = await helper.StatusUpdateAsync(model.Answer, model.Question.TweetId);
 
             var answer = new Answer()
