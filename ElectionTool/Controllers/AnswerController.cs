@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -33,10 +34,22 @@ namespace ElectionTool.Controllers
         }
 
         [HttpGet]
-        public ActionResult Entry(int id)
+        public ActionResult Entry(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var question = _db.Questions.Find(id);
+            if (question == null)
+            {
+                return HttpNotFound();
+            }
+
             var model = new AnswerEntryViewModel();
-            model.Question = _db.Questions.Find(id);
+            model.Question = question;
+
             return View(model);
         }
 
