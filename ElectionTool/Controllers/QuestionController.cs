@@ -13,6 +13,8 @@ namespace ElectionTool.Controllers
 {
     public class QuestionController : Controller
     {
+        private AppDbContext _db = new AppDbContext();
+
         public async Task<ActionResult> Entry(string question)
         {
             if (Session["AccessToken"] != null)
@@ -20,19 +22,16 @@ namespace ElectionTool.Controllers
                 // Twitterへの投稿
                 var helper = new TwitterHelperForResident(this);
                 var response = await helper.StatusUpdateAsync(question);
-                
-                // データベースへの登録
-                using (var db = new AppDbContext())
-                {
-                    db.Questions.Add(new Question()
-                    {
-                        Text = question,
-                        TweetId = response.Id,
-                        ScreenName = response.User.ScreenName
-                    });
 
-                    await db.SaveChangesAsync();
-                }
+                // データベースへの登録
+                _db.Questions.Add(new Question()
+                {
+                    Text = question,
+                    TweetId = response.Id,
+                    ScreenName = response.User.ScreenName
+                });
+
+                await _db.SaveChangesAsync();
 
                 return View();
             }
@@ -47,6 +46,15 @@ namespace ElectionTool.Controllers
             Session["Question"] = question;
 
             return Redirect(oAuthSession.AuthorizeUri.OriginalString);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
