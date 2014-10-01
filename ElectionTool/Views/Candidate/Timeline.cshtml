@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ElectionTool.Models.Question>
+
+<ul class="candidate-timeline">
+    @foreach (var q in Model)
+    {
+        <li class="q">
+            <div class="user">
+                <i class="type">Q</i>
+                <img class="icon" src="" />
+                <div class="name">@q.ScreenName</div>
+            </div>
+            <div class="text" style="">
+                @q.Text
+            </div>
+        </li>
+
+        foreach (var a in q.Answers)
+        {
+            <li class="a">
+                <div class="user">
+                    <i class="type">A</i>
+                    <img class="icon" src="" />
+                    <div class="name"></div>
+                </div>
+                <div class="text" style="">
+                    @a.Text
+                </div>
+            </li>
+        }
+        <div class="qaTweet" style="height: 2px; background-color: rgb(4, 175, 230); display: block; opacity: 1; background-position: initial initial; background-repeat: initial initial;"></div>
+    }
+</ul>
+@*
+    <ul class="qa">
+        <li class="q qaTweet id430664104508805121153717550" style="opacity: 1; display: block;">
+            <div class="user">
+                <i class="q">Q</i>
+                <a class="icon" href="https://twitter.com/kobayan_dolphin" target="_blank">
+                    <img src="./public/f3159832fdade153c3cc793878ef1c51_normal.png">
+                </a>
+                <div class="name">
+                    <a href="https://twitter.com/kobayan_dolphin" target="_blank">@kobayan_dolphin</a>
+                </div>
+            </div>
+            <div class="description">
+                <p>
+                    座右の銘は何ですか？ <a href="https://twitter.com/#都知事候補だけど質問ある" target="_blank">#都知事候補だけど質問ある</a>？ <a href="http://t.co/TdUvFlfSCn" target="_blank">http://t.co/TdUvFlfSCn</a>
+                </p>
+            </div>
+        </li>
+        <li class="a qaTweet id430664104508805121153717550" style="opacity: 1; display: block;">
+            <div class="user">
+                <i class="a">A</i>
+                <a class="icon" href="https://twitter.com/MasuzoeYoichi" target="_blank">
+                    <img src="./public/SQHOf0L5_normal.jpeg">
+                </a> <div class="name">
+                    <a href="https://twitter.com/MasuzoeYoichi" target="_blank">@MasuzoeYoichi</a>
+                </div>
+            </div>
+            <div class="description">
+                <p>
+                    「泰山不譲土譲故能成其大」史記の言葉です。常に人の意見に耳を傾けることを心がけています。　<a href="https://twitter.com/kobayan_dolphin" target="_blank">@kobayan_dolphin</a> 座右の銘は何ですか？ <a href="https://twitter.com/#都知事候補だけど質問ある" target="_blank">#都知事候補だけど質問ある</a>？ <a href="http://t.co/hSyzJxPCOE" target="_blank">http://t.co/hSyzJxPCOE</a>
+                </p>
+            </div>
+        </li>
+        <div class="qaTweet" style="height: 2px; background-color: rgb(4, 175, 230); display: block; opacity: 1; background-position: initial initial; background-repeat: initial initial;"></div>
+    </ul>
+*@

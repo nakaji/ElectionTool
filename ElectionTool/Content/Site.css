@@ -21,6 +21,7 @@ textarea {
 }
 .candidate-timeline {
   list-style: none;
+  padding: 0;
 }
 .candidate-timeline .q {
   background-color: rgba(184, 237, 254, 0.1);

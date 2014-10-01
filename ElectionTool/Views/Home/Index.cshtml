@@ -32,7 +32,7 @@
         <h2>質疑応答</h2>
     </div>
     <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
+        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;overflow: scroll;" id="tl"></div>
     </div>
     <div class="col-md-4">
         <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
@@ -50,3 +50,16 @@
         <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        $.ajax({
+            url: "http://mydomain.com:63543/Candidate/Timeline?userId=6eb7e681-1740-4138-b071-e8f2a52a5765",
+            contentType: "application/html; charset=utf-8",
+            type: "GET",
+            dataType: "html"
+        }).success(function(result) {
+            $("#tl").html(result);
+        })
+    </script>
+}
