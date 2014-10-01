@@ -26,6 +26,8 @@ namespace ElectionTool.Models
 
         public string ScreenName { get; set; }
 
+        public string IconUri { get; set; }
+
         public ICollection<Answer> Answers { get; set; } 
     }
 
@@ -37,8 +39,12 @@ namespace ElectionTool.Models
 
         [Display(Name = "内容")]
         public string Text { get; set; }
-
+        
         public long TweetId { get; set; }
+
+        public string ScreenName { get; set; }
+
+        public string IconUri { get; set; }
 
         public Question Question { get; set; }
     }
