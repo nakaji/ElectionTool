@@ -1,32 +1,32 @@
-﻿@model IEnumerable<ElectionTool.Models.Question>
+﻿@model ElectionTool.Models.CandidateTimelineViewModel
 
-<ul class="candidate-timeline">
-    @foreach (var q in Model)
-    {
-        <li class="q">
-            <div class="user">
-                <i class="type">Q</i>
-                <img class="icon" src="@q.IconUri" />
-                <div class="name">@q.ScreenName</div>
-            </div>
-            <div class="text" style="">
-                @q.Text
-            </div>
-        </li>
-
-        foreach (var a in q.Answers)
+    <ul class="candidate-timeline">
+        @foreach (var q in Model.Questions)
         {
-            <li class="a">
+            <li class="q">
                 <div class="user">
-                    <i class="type">A</i>
-                    <img class="icon" src="@a.IconUri" />
-                    <div class="name">@a.ScreenName</div>
+                    <i class="type">Q</i>
+                    <img class="icon" src="@q.IconUri" />
+                    <div class="name">@q.ScreenName</div>
                 </div>
                 <div class="text" style="">
-                    @a.Text
+                    @q.Text
                 </div>
             </li>
+
+            foreach (var a in q.Answers.Where(a => a.UserId == Model.UserId))
+            {
+                <li class="a">
+                    <div class="user">
+                        <i class="type">A</i>
+                        <img class="icon" src="@a.IconUri" />
+                        <div class="name">@a.ScreenName</div>
+                    </div>
+                    <div class="text" style="">
+                        @a.Text
+                    </div>
+                </li>
+            }
+            <div class="qaTweet" style="height: 2px; background-color: rgb(4, 175, 230); display: block; opacity: 1; background-position: initial initial; background-repeat: initial initial;"></div>
         }
-        <div class="qaTweet" style="height: 2px; background-color: rgb(4, 175, 230); display: block; opacity: 1; background-position: initial initial; background-repeat: initial initial;"></div>
-    }
-</ul>
+    </ul>

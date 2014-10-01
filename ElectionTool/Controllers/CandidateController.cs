@@ -20,9 +20,13 @@ namespace ElectionTool.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var model = new CandidateTimelineViewModel
+            {
+                UserId = userId,
+                Questions = _db.Questions.Include("Answers").Where(x => x.Answers.Any(a => a.UserId == userId))
+            };
 
-            var questions = _db.Questions.Include("Answers").Where(x => x.Answers.Any(a => a.UserId == userId));
-            return PartialView(questions);
+            return PartialView(model);
         }
 
         protected override void Dispose(bool disposing)

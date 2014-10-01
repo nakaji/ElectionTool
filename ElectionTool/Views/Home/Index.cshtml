@@ -31,35 +31,29 @@
     <div class="col-md-12">
         <h2>質疑応答</h2>
     </div>
-    <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;overflow: scroll;" id="tl"></div>
-    </div>
-    <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
-    </div>
-    <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
-    </div>
-    <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
-    </div>
-    <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
-    </div>
-    <div class="col-md-4">
-        <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;"></div>
-    </div>
+    @foreach (var user in Model.Users)
+    {
+        <div class="col-md-4">
+            <h4>候補者</h4><div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;overflow: scroll;" id="@user.Id" class="timeline"></div>
+        </div>
+    }
 </div>
 @section scripts
 {
-    <script>
-        $.ajax({
-            url: "http://mydomain.com:63543/Candidate/Timeline?userId=6eb7e681-1740-4138-b071-e8f2a52a5765",
-            contentType: "application/html; charset=utf-8",
-            type: "GET",
-            dataType: "html"
-        }).success(function(result) {
-            $("#tl").html(result);
-        })
+    <script type="text/javascript">
+        $(function () {
+            $(".timeline").each(function () {
+                var targetId = $(this)[0].id;
+                $.ajax({
+                    url: "http://mydomain.com:63543/Candidate/Timeline?userId=" + targetId,
+                    contentType: "application/html; charset=utf-8",
+                    type: "GET",
+                    dataType: "html"
+                }).success(function (result) {
+                    //$("#6eb7e681-1740-4138-b071-e8f2a52a5765").html(result);
+                    $("#"+targetId).html(result);
+                });
+            });
+        });
     </script>
 }
