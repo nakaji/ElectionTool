@@ -11,5 +11,7 @@ namespace ElectionTool.Models
         [MaxLength(100)]
         [Display(Name="質問")]
         public string Question { get; set; }
+
+        public IEnumerable<ApplicationUser> Users { get; set; }
     }
 }

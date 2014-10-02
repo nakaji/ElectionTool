@@ -67,6 +67,8 @@ namespace ElectionTool.Controllers
                 UserId = User.Identity.GetUserId(),
                 Text = model.Answer,
                 TweetId = response.Id,
+                ScreenName = response.User.ScreenName,
+                IconUri = response.User.ProfileImageUrl.AbsoluteUri,
                 Question = question
             };
 

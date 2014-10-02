@@ -28,7 +28,8 @@ namespace ElectionTool.Controllers
                 {
                     Text = question,
                     TweetId = response.Id,
-                    ScreenName = response.User.ScreenName
+                    ScreenName = response.User.ScreenName,
+                    IconUri = response.User.ProfileImageUrl.AbsoluteUri,
                 });
 
                 await _db.SaveChangesAsync();

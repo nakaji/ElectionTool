@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ElectionTool.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using WebGrease.Css.Extensions;
 
 namespace ElectionTool.Controllers
 {
@@ -10,7 +13,11 @@ namespace ElectionTool.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new HomeIndexViewModel();
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            model.Users = manager.Users;
+
+            return View(model);
         }
 
         public ActionResult About()

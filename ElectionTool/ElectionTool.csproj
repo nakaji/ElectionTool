@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\AuthCallbackController.cs" />
+    <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\AppDbContext.cs" />
+    <Compile Include="Models\CandidateViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -186,10 +188,19 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css">
+      <DependentUpon>Site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Site.css.map">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
+    <None Include="Content\Site.less" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -245,6 +256,7 @@
     <Content Include="Views\Question\Entry.cshtml" />
     <Content Include="Views\Answer\Index.cshtml" />
     <Content Include="Views\Answer\Entry.cshtml" />
+    <Content Include="Views\Candidate\Timeline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
