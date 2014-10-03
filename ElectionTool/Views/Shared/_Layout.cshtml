@@ -23,6 +23,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("ホーム", "Index", "Home")</li>
+                    @if (User.Identity.IsAuthenticated) { 
+                        <li>@Html.ActionLink("回答する", "Index", "Answer")</li>
+                    }
                     <li>@Html.ActionLink("詳細", "About", "Home")</li>
                     <li>@Html.ActionLink("連絡先", "Contact", "Home")</li>
                 </ul>
