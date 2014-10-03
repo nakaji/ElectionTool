@@ -40,7 +40,7 @@ namespace ElectionTool.Controllers
             // Twitterへの認証
             var consumerKey = ConfigurationManager.AppSettings["TwitterApiKey"];
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecret"];
-            var siteUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+            var siteUrl = Request.Url.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped);
 
             var oAuthSession = OAuth.Authorize(consumerKey, consumerSecret, siteUrl + "/AuthCallback/Twitter");
 
