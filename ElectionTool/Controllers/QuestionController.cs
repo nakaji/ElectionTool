@@ -13,7 +13,7 @@ namespace ElectionTool.Controllers
 {
     public class QuestionController : Controller
     {
-        private AppDbContext _db = new AppDbContext();
+        private ApplicationDbContext _db = new ApplicationDbContext();
 
         public async Task<ActionResult> Entry(string question)
         {

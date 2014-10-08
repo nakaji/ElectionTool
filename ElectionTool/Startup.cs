@@ -11,7 +11,7 @@ namespace ElectionTool
     {
         public void Configuration(IAppBuilder app)
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
 
             ConfigureAuth(app);
         }

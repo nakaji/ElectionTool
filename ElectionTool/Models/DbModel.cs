@@ -7,14 +7,6 @@ using System.Web;
 
 namespace ElectionTool.Models
 {
-    public class AppDbContext : DbContext
-    {
-        public AppDbContext() : base("DefaultConnection") { }
-
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<Answer> Answers { get; set; }
-    }
-
     public class Question
     {
         public int Id { get; set; }

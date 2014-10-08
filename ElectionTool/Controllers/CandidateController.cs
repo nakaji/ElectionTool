@@ -11,7 +11,7 @@ namespace ElectionTool.Controllers
 {
     public class CandidateController : Controller
     {
-        private AppDbContext _db = new AppDbContext();
+        private ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: Timeline
         public ActionResult Timeline(string userId)

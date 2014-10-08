@@ -16,7 +16,7 @@ namespace ElectionTool.Controllers
     [Authorize]
     public class AnswerController : Controller
     {
-        private AppDbContext _db = new AppDbContext();
+        private ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: Answer
         public ActionResult Index()

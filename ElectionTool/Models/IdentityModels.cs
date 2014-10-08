@@ -20,6 +20,9 @@ namespace ElectionTool.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -30,4 +33,5 @@ namespace ElectionTool.Models
             return new ApplicationDbContext();
         }
     }
+
 }
