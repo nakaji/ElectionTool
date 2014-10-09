@@ -6,8 +6,17 @@ namespace ElectionTool.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        [Display(Name = "姓")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "名")]
+        public string FirstName { get; set; }
+
+        [Required]
         [Display(Name = "電子メール")]
         public string Email { get; set; }
+
     }
 
     public class ExternalLoginListViewModel
@@ -64,6 +73,14 @@ namespace ElectionTool.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "姓")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "名")]
+        public string FirstName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "電子メール")]
