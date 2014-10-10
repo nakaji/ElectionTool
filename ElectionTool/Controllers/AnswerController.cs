@@ -75,7 +75,7 @@ namespace ElectionTool.Controllers
             _db.Answers.Add(answer);
             await _db.SaveChangesAsync();
 
-            return View(model);
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
