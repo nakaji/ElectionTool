@@ -13,5 +13,7 @@ namespace ElectionTool.Models
         public string Question { get; set; }
 
         public IEnumerable<ApplicationUser> Users { get; set; }
+
+        public string TwitterWidgetId { get; set; }
     }
 }

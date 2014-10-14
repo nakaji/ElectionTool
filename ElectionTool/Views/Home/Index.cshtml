@@ -3,42 +3,50 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>ASK ○○ 2014</h1>
-    <p class="lead">候補者へ「趣味のこと」から「当選したらやりたい政策」まで何でも自由に直接質問できる、市民と候補者のためのウェブサービスです。「こんなことを聞いてもいいのかな？」なんて心配は要りません。せっかくのこの機会に、何か質問してみませんか？</p>
-</div>
-
 <div class="row">
-    <div class="col-md-8">
-        <h2>質問してみよう</h2>
-        @using (Html.BeginForm("Entry", "Question", FormMethod.Post))
-        {
-            <div class="form-group">
-                <div class="col-md-10">
-                    @Html.TextAreaFor(m => m.Question, new { @class = "form-control" })
-                </div>
-                <input type="submit" value="質問する" class="btn btn-primary btn-lg col-md-2" />
-            </div>
-        }
-    </div>
-    <div class="col-md-4">
-        <h2>Twitter</h2>
-        <p>ハッシュタグでの検索結果を垂れ流す</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <h2>質疑応答</h2>
-    </div>
-    @foreach (var user in Model.Users)
-    {
-        <div class="col-md-4">
-            <h4>@(user.LastName + user.FirstName)候補</h4>
-            <div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;overflow: scroll;" id="@user.Id" class="timeline"></div>
+    <div class="col-md-9">
+        <div class="jumbotron ">
+            <h1>ASK ○○ 2014</h1>
+            <p class="lead">候補者へ「趣味のこと」から「当選したらやりたい政策」まで何でも自由に直接質問できる、市民と候補者のためのウェブサービスです。「こんなことを聞いてもいいのかな？」なんて心配は要りません。せっかくのこの機会に、何か質問してみませんか？</p>
         </div>
-    }
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2>質問してみよう</h2>
+                @using (Html.BeginForm("Entry", "Question", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(m => m.Question, new { @class = "form-control" })
+                        </div>
+                        <input type="submit" value="質問する" class="btn btn-primary btn-lg col-md-2" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>質疑応答</h2>
+            </div>
+            @foreach (var user in Model.Users)
+            {
+                <div class="col-md-4">
+                    <h4>@(user.LastName + user.FirstName)候補</h4>
+                    <div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;overflow: scroll;" id="@user.Id" class="timeline"></div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-3" style="margin-top: 8px">
+        <a class="twitter-timeline" href="" data-widget-id="@Model.TwitterWidgetId"></a>
+        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    </div>
 </div>
+
+
+
 @section scripts
 {
     <script type="text/javascript">

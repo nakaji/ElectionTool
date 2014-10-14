@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ namespace ElectionTool.Controllers
             var model = new HomeIndexViewModel();
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             model.Users = manager.Users;
+            model.TwitterWidgetId = ConfigurationManager.AppSettings["WtitterWidgetId"];
 
             return View(model);
         }
