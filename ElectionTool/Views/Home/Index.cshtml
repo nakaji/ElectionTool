@@ -46,7 +46,6 @@
 </div>
 
 
-
 @section scripts
 {
     <script type="text/javascript">
@@ -54,7 +53,7 @@
             $(".timeline").each(function () {
                 var targetId = $(this)[0].id;
                 $.ajax({
-                    url: "http://mydomain.com:63543/Candidate/Timeline?userId=" + targetId,
+                    url: "/Candidate/Timeline?userId=" + targetId,
                     contentType: "application/html; charset=utf-8",
                     type: "GET",
                     dataType: "html"
