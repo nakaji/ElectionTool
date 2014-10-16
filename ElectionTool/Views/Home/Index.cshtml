@@ -11,7 +11,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <h2>質問してみよう</h2>
                 @using (Html.BeginForm("Entry", "Question", FormMethod.Post))
                 {
@@ -33,7 +33,7 @@
             {
                 <div class="col-md-4">
                     <h4>@(user.LastName + user.FirstName)候補</h4>
-                    <div style="height: 200px;border-style:solid;border-width: 1px;padding: 3px;overflow: scroll;" id="@user.Id" class="timeline"></div>
+                    <div id="@user.Id" class="timeline"></div>
                 </div>
             }
         </div>
