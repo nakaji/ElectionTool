@@ -339,10 +339,6 @@ namespace ElectionTool.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    // ログインしたらAccessToken,AccessTokenSecretを保存しておく
-                    Session["AccessToken"] = loginInfo.ExternalIdentity.Claims.First(x => x.Type == "ExternalAccessToken").Value;
-                    Session["AccessTokenSecret"] = loginInfo.ExternalIdentity.Claims.First(x => x.Type == "ExternalAccessTokenSecret").Value;
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -377,18 +373,27 @@ namespace ElectionTool.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+
+                // ログインしたらAccessToken,AccessTokenSecretを保存しておく
+                var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+                var accessToken = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessToken").Value;
+                var accessTokenSecret = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessTokenSecret").Value;
+
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    AccessToken = accessToken,
+                    AccessTokenSecret = accessTokenSecret
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
-                        // ログインしたらAccessToken,AccessTokenSecretを保存しておく
-                        var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-                        Session["AccessToken"] = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessToken").Value;
-                        Session["AccessTokenSecret"] = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessTokenSecret").Value;
-
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CoreTweet;
+using ElectionTool.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ElectionTool.Helper
 {
@@ -30,13 +32,18 @@ namespace ElectionTool.Helper
         {
             var consumerKey = ConfigurationManager.AppSettings["TwitterApiKeyForCandidate"];
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecretForCandidate"];
-            var accessToken = controller.Session["AccessToken"].ToString();
-            var accessTokenSecret = controller.Session["AccessTokenSecret"].ToString();
 
-            Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+            using (var db = new ApplicationDbContext())
+            {
+                var userId = controller.User.Identity.GetUserId();
+                var user = db.Users.First(x => x.Id == userId);
+                var accessToken = user.AccessToken;
+                var accessTokenSecret = user.AccessTokenSecret;
+                Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+            }
         }
 
-        public async Task<StatusResponse> StatusUpdateAsync(string message, long replyStatusId,string screenName)
+        public async Task<StatusResponse> StatusUpdateAsync(string message, long replyStatusId, string screenName)
         {
             var postMassage = string.Format(". @{0} {1} #{2}", screenName, message, Hashtag);
 
