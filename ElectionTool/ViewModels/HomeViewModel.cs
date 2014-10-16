@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using ElectionTool.Models;
 
-namespace ElectionTool.Models
+namespace ElectionTool.ViewModels
 {
     public class HomeIndexViewModel
     {

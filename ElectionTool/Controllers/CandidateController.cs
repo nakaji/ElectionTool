@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ElectionTool.Models;
+using ElectionTool.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace ElectionTool.Controllers

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ElectionTool.Models;
+using ElectionTool.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 using WebGrease.Css.Extensions;
 

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using ElectionTool.Models;
 
-namespace ElectionTool.Models
+namespace ElectionTool.ViewModels
 {
     public class CandidateTimelineViewModel
     {
