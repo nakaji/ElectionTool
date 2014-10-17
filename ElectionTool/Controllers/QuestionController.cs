@@ -17,10 +17,10 @@ namespace ElectionTool.Controllers
 
         public async Task<ActionResult> Entry(string question)
         {
-            if (Session["AccessToken"] != null)
+            var helper = new TwitterHelperForResident(this);
+            if (helper.IsAuthorized)
             {
                 // Twitterへの投稿
-                var helper = new TwitterHelperForResident(this);
                 var response = await helper.StatusUpdateAsync(question);
 
                 // データベースへの登録

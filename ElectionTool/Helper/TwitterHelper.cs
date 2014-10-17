@@ -53,14 +53,22 @@ namespace ElectionTool.Helper
 
     public class TwitterHelperForResident : TwitterHelper
     {
+        public bool IsAuthorized { get; private set; }
+
         public TwitterHelperForResident(Controller controller)
         {
+            if (controller.Session["AccessToken"] == null)
+            {
+                IsAuthorized = false;
+                return;
+            }
             var consumerKey = ConfigurationManager.AppSettings["TwitterApiKey"];
             var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecret"];
             var accessToken = controller.Session["AccessToken"].ToString();
             var accessTokenSecret = controller.Session["AccessTokenSecret"].ToString();
 
             Token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+            IsAuthorized = true;
         }
     }
 }
