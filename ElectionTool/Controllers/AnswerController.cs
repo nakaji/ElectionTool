@@ -57,8 +57,7 @@ namespace ElectionTool.Controllers
         [HttpPost]
         public async Task<ActionResult> Entry([Bind(Include = "Question, Answer")]AnswerEntryViewModel model)
         {
-            // Todo: model.Answerは不要
-            var question = _db.Questions.Find(model.Question.Id, model.Answer);
+            var question = _db.Questions.Find(model.Question.Id);
 
             // Twitterへの投稿
             var helper = new TwitterHelperForCandidate(this);
