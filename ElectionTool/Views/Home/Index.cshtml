@@ -13,6 +13,12 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>質問してみよう</h2>
+                @if (Model.IsSucceeded)
+                {
+                    <div class="alert alert-success" role="alert">
+                        質問を受け付けました。
+                    </div>
+                }
                 @using (Html.BeginForm("Entry", "Question", FormMethod.Post))
                 {
                     <div class="form-group">

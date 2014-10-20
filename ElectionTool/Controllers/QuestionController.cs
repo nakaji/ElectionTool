@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using CoreTweet;
 using ElectionTool.Helper;
 using ElectionTool.Models;
 using System.Threading.Tasks;
+using ElectionTool.ViewModels;
 
 namespace ElectionTool.Controllers
 {
@@ -31,10 +29,11 @@ namespace ElectionTool.Controllers
                     ScreenName = response.User.ScreenName,
                     IconUri = response.User.ProfileImageUrl.AbsoluteUri,
                 });
-
                 await _db.SaveChangesAsync();
 
-                return View();
+                var model = new HomeIndexViewModel {IsSucceeded = true};
+
+                return View("../Home/Index", model);
             }
 
             // Twitterへの認証

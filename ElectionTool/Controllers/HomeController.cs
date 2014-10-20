@@ -15,12 +15,7 @@ namespace ElectionTool.Controllers
     {
         public ActionResult Index()
         {
-            var model = new HomeIndexViewModel();
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-            model.Users = manager.Users;
-            model.TwitterWidgetId = ConfigurationManager.AppSettings["TwitterWidgetId"];
-
-            return View(model);
+            return View(new HomeIndexViewModel());
         }
 
         public ActionResult About()
