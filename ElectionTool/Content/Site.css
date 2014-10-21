@@ -19,6 +19,19 @@ select,
 textarea {
   /*max-width: 280px;*/
 }
+.user {
+  float: left;
+  width: 70%;
+}
+.replycount {
+  float: right;
+  width: 30%;
+  text-align: right;
+  font-size: 72px;
+  position: relative;
+  top: -30px;
+  line-height: 72px;
+}
 .timeline {
   height: 200px;
   border-radius: 5px;

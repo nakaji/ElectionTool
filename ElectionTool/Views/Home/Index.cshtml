@@ -35,11 +35,12 @@
             <div class="col-md-12">
                 <h2>質疑応答</h2>
             </div>
-            @foreach (var user in Model.Users)
+            @foreach (var candidate in Model.CandidateInfos)
             {
                 <div class="col-md-4">
-                    <h4>@(user.LastName + user.FirstName)候補</h4>
-                    <div id="@user.Id" class="timeline"></div>
+                    <div class="user" style=""><p>@(candidate.User.LastName + candidate.User.FirstName)候補</p></div>
+                    <div class="replycount" style="">@candidate.ReplyCount</div>
+                    <div id="@candidate.User.Id" class="timeline" style="display:block;width: 100%"></div>
                 </div>
             }
         </div>
