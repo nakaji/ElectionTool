@@ -23,6 +23,14 @@ textarea {
   float: left;
   width: 70%;
 }
+.user .icon {
+  width: 48px;
+  float: left;
+  margin-right: 10px;
+}
+.user .candidatename {
+  margin: 0;
+}
 .replycount {
   float: right;
   width: 30%;

@@ -380,6 +380,13 @@ namespace ElectionTool.Controllers
                 var accessToken = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessToken").Value;
                 var accessTokenSecret = claimsIdentity.Claims.First(x => x.Type == "ExternalAccessTokenSecret").Value;
 
+                // Twitterの画像とスクリーンネームを保存する
+                var userId = claimsIdentity.Claims.First(x => x.Type == "TwitterUserId").Value;
+                var consumerKey = ConfigurationManager.AppSettings["TwitterApiKeyForCandidate"];
+                var consumerSecret = ConfigurationManager.AppSettings["TwitterApiKeySecretForCandidate"];
+                var token = Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+                var twitterUser = token.Users.Lookup(user_id => userId).First();
+
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
@@ -387,7 +394,9 @@ namespace ElectionTool.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     AccessToken = accessToken,
-                    AccessTokenSecret = accessTokenSecret
+                    AccessTokenSecret = accessTokenSecret,
+                    ScreenName = twitterUser.ScreenName,
+                    IconUri = twitterUser.ProfileImageUrl.AbsoluteUri
                 };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)

@@ -14,6 +14,8 @@ namespace ElectionTool.Models
         public string LastName { get; set; }
         public string AccessToken { get; set; }
         public string AccessTokenSecret { get; set; }
+        public string ScreenName { get; set; }
+        public string IconUri { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

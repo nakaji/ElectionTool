@@ -65,6 +65,7 @@ namespace ElectionTool
                 {
                     context.Identity.AddClaim(new Claim("ExternalAccessToken", context.AccessToken));
                     context.Identity.AddClaim(new Claim("ExternalAccessTokenSecret", context.AccessTokenSecret));
+                    context.Identity.AddClaim(new Claim("TwitterUserId", context.UserId));
                 }
             };
             app.UseTwitterAuthentication(options);

@@ -38,7 +38,11 @@
             @foreach (var candidate in Model.CandidateInfos)
             {
                 <div class="col-md-4">
-                    <div class="user" style=""><p>@(candidate.User.LastName + candidate.User.FirstName)候補</p></div>
+                    <div class="user" style="">
+                        <img class="icon" src="@candidate.User.IconUri" />
+                        <p class="candidatename">@(candidate.User.LastName + candidate.User.FirstName)候補</p>
+                        <a href="http://twitter.com/@candidate.User.ScreenName">@@@candidate.User.ScreenName</a>
+                    </div>
                     <div class="replycount" style="">@candidate.ReplyCount</div>
                     <div id="@candidate.User.Id" class="timeline" style="display:block;width: 100%"></div>
                 </div>
